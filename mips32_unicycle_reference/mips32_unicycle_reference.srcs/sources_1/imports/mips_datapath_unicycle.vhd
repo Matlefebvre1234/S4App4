@@ -140,6 +140,7 @@ end component;
     signal s_regV_data2        : std_ulogic_vector(127 downto 0);
     
     signal s_AluResult             : std_ulogic_vector(31 downto 0);
+    signal s_AluResultV            : std_ulogic_vector(127 downto 0);
     
     signal s_Data2Reg_muxout       : std_ulogic_vector(31 downto 0);
     signal s_Data2RegV_muxout      : std_ulogic_vector(127 downto 0);
@@ -294,7 +295,7 @@ s_Data2Reg_muxout    <= s_adresse_PC_plus_4 when i_jump_link = '1' else
 					    s_AluResult         when i_MemtoReg = '0' else 
 						s_MemoryReadData;
 						
-s_Data2RegV_muxout    <= s_AluResult         when i_MemtoRegV = '0' else 
+s_Data2RegV_muxout    <= s_AluResultV         when i_MemtoRegV = '0' else 
 						 s_MemoryReadDataV;
         
 end Behavioral;
