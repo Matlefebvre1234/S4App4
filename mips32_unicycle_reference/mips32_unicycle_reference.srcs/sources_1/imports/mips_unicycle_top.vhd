@@ -30,25 +30,29 @@ end mips_unicycle_top;
 
 architecture Behavioral of mips_unicycle_top is
 
-    component controleur is
+component controleur is
 Port (
-    i_Op        : in std_ulogic_vector(5 downto 0);
-    i_funct_field : in std_ulogic_vector (5 downto 0);
+    i_Op          	: in std_ulogic_vector(5 downto 0);
+    i_funct_field 	: in std_ulogic_vector(5 downto 0);
     
-    o_RegDst    : out std_ulogic;
-    o_Branch    : out std_ulogic;
-    o_MemtoReg  : out std_ulogic;
-    o_AluFunct  : out std_ulogic_vector (3 downto 0);
-    o_MemRead   : out std_ulogic;
-    o_MemWrite  : out std_ulogic;
-    o_ALUSrc    : out std_ulogic;
-    o_RegWrite  : out std_ulogic;
+    o_RegDst    	: out std_ulogic;
+    o_Branch    	: out std_ulogic;
+    o_MemtoReg  	: out std_ulogic;
+    o_MemtoRegV  	: out std_ulogic;
+    o_AluFunct  	: out std_ulogic_vector (3 downto 0);
+    o_MemRead   	: out std_ulogic;
+    o_MemWrite  	: out std_ulogic;
+    o_MemReadWide  	: out std_ulogic;
+    o_MemWriteWide 	: out std_ulogic;
+    o_ALUSrc    	: out std_ulogic;
+    o_RegWrite  	: out std_ulogic;
+    o_RegWriteV  	: out std_ulogic;
 	
 	-- Sorties supp. vs 4.17
-    o_Jump : out std_ulogic;
+    o_Jump 			: out std_ulogic;
 	o_jump_register : out std_ulogic;
-	o_jump_link : out std_ulogic;
-	o_SignExtend : out std_ulogic
+	o_jump_link 	: out std_ulogic;
+	o_SignExtend 	: out std_ulogic
     );
 end component;
 
@@ -114,11 +118,15 @@ Port map(
     o_RegDst    	=> s_RegDst,
     o_Branch    	=> s_branch,
     o_MemtoReg  	=> s_MemtoReg,
+    o_MemtoRegV     => s_MemToRegV,
     o_AluFunct  	=> s_alu_funct,
     o_MemRead  		=> s_MemRead,
     o_MemWrite  	=> s_MemWrite,
     o_ALUSrc    	=> s_ALUSrc,
     o_RegWrite  	=> s_RegWrite,
+    o_RegWriteV      => s_RegWriteV,
+    o_MemReadWide  	=> s_MemReadWide,
+    o_MemWriteWide  => s_MemWriteWide,
 	
     o_Jump 			=> s_Jump,
 	o_jump_register => s_jump_register,
