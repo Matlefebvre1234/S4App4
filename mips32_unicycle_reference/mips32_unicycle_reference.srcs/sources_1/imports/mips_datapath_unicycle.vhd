@@ -26,12 +26,16 @@ Port (
 
 	i_alu_funct   	: in std_ulogic_vector(3 downto 0);
 	i_RegWrite    	: in std_ulogic;
+	i_RegWriteV    	: in std_ulogic;
 	i_RegDst      	: in std_ulogic;
 	i_MemtoReg    	: in std_ulogic;
+	i_MemtoRegV    	: in std_ulogic;
 	i_branch      	: in std_ulogic;
 	i_ALUSrc      	: in std_ulogic;
 	i_MemRead 		: in std_ulogic;
 	i_MemWrite	  	: in std_ulogic;
+	i_MemReadWide 	: in std_ulogic;
+	i_MemWriteWide	: in std_ulogic;
 
 	i_jump   	  	: in std_ulogic;
 	i_jump_register : in std_ulogic;
@@ -51,18 +55,6 @@ component MemInstructions is
            o_instruction : out std_ulogic_vector (31 downto 0));
 end component;
 
-component MemDonnees is
-Port ( 
-	clk : in std_ulogic;
-	reset : in std_ulogic;
-	i_MemRead 	: in std_ulogic;
-	i_MemWrite : in std_ulogic;
-    i_Addresse : in std_ulogic_vector (31 downto 0);
-	i_WriteData : in std_ulogic_vector (31 downto 0);
-    o_ReadData : out std_ulogic_vector (31 downto 0)
-);
-end component;
-
 	component BancRegistres is
 	Port ( 
 		clk : in std_ulogic;
@@ -76,6 +68,20 @@ end component;
 		o_RS2_DAT : out std_ulogic_vector (31 downto 0)
 		);
 	end component;
+	
+	component registrevector is
+	Port ( 
+		clk : in std_ulogic;
+		reset : in std_ulogic;
+		i_RS1 : in std_ulogic_vector (4 downto 0);
+		i_RS2 : in std_ulogic_vector (4 downto 0);
+		i_Wr_DAT : in std_ulogic_vector (127 downto 0);
+		i_WDest : in std_ulogic_vector (4 downto 0);
+		i_WE : in std_ulogic;
+		o_RS1_DAT : out std_ulogic_vector (127 downto 0);
+		o_RS2_DAT : out std_ulogic_vector (127 downto 0)
+		);
+	end component;
 
 	component alu is
 	Port ( 
@@ -87,6 +93,24 @@ end component;
 		o_zero		: out std_ulogic
 		);
 	end component;
+
+    component MemDonneesWideDual is
+    Port ( 
+	   clk 		: in std_ulogic;
+	   reset 		: in std_ulogic;
+	   i_MemRead	: in std_ulogic;
+	   i_MemWrite 	: in std_ulogic;
+        i_Addresse 	: in std_ulogic_vector (31 downto 0);
+	   i_WriteData : in std_ulogic_vector (31 downto 0);
+        o_ReadData 	: out std_ulogic_vector (31 downto 0);
+	
+	   -- ports pour accès à large bus, adresse partagée
+	   i_MemReadWide       : in std_ulogic;
+	   i_MemWriteWide 		: in std_ulogic;
+	   i_WriteDataWide 	: in std_ulogic_vector (127 downto 0);
+        o_ReadDataWide 		: out std_ulogic_vector (127 downto 0)
+    );
+    end component;
 
 	constant c_Registre31		 : std_ulogic_vector(4 downto 0) := "11111";
 	signal s_zero        : std_ulogic;
@@ -111,15 +135,21 @@ end component;
     signal s_jump_field  : std_ulogic_vector(25 downto 0);
     signal s_reg_data1        : std_ulogic_vector(31 downto 0);
     signal s_reg_data2        : std_ulogic_vector(31 downto 0);
+    
+    signal s_regV_data1        : std_ulogic_vector(127 downto 0);
+    signal s_regV_data2        : std_ulogic_vector(127 downto 0);
+    
     signal s_AluResult             : std_ulogic_vector(31 downto 0);
     
     signal s_Data2Reg_muxout       : std_ulogic_vector(31 downto 0);
+    signal s_Data2RegV_muxout      : std_ulogic_vector(127 downto 0);
     
     signal s_imm_extended          : std_ulogic_vector(31 downto 0);
     signal s_imm_extended_shifted  : std_ulogic_vector(31 downto 0);
 	
     signal s_Reg_Wr_Data           : std_ulogic_vector(31 downto 0);
     signal s_MemoryReadData        : std_ulogic_vector(31 downto 0);
+    signal s_MemoryReadDataV    : std_ulogic_vector(127 downto 0);
     signal s_AluB_data             : std_ulogic_vector(31 downto 0);
 	
 
@@ -200,6 +230,19 @@ port map (
 	o_RS2_DAT    => s_reg_data2
 	);
 	
+	inst_RegistresVector: registrevector 
+port map ( 
+	clk          => clk,
+	reset        => reset,
+	i_RS1        => s_rs,
+	i_RS2        => s_rt,
+	i_Wr_DAT     => s_Data2RegV_muxout,--les donnees sont changees, pcq il faut en envoyer 128 a la place de 32
+	i_WDest      => s_WriteRegDest_muxout, -- reste le même, pcq on a le même nombre de registres pour notre bacn vectoriel
+	i_WE         => i_RegWriteV, --signal du controleur si on ecrit dans le registre vectoriel
+	o_RS1_DAT    => s_regV_data1, --registre vectoriel dans lequel on va chercher des valeurs
+	o_RS2_DAT    => s_regV_data2 --same
+	);
+	
 
 ------------------------------------------------------------------------
 -- ALU (instance, extension de signe et mux d'entrÃ©e pour les immÃ©diats)
@@ -224,16 +267,23 @@ port map(
 ------------------------------------------------------------------------
 -- MÃ©moire de donnÃ©es
 ------------------------------------------------------------------------
-inst_MemDonnees : MemDonnees
-Port map( 
-	clk 		=> clk,
+	
+inst_MemDonneesWide: MemDonneesWideDual
+Port map(
+    clk 		=> clk,
 	reset 		=> reset,
 	i_MemRead	=> i_MemRead,
 	i_MemWrite	=> i_MemWrite,
     i_Addresse	=> s_AluResult,
 	i_WriteData => s_reg_data2,
-    o_ReadData	=> s_MemoryReadData
-	);
+    o_ReadData	=> s_MemoryReadData,
+	
+	   -- ports pour accès à large bus, adresse partagée
+	i_MemReadWide => i_MemReadWide,
+	i_MemWriteWide => i_MemWriteWide,
+	i_WriteDataWide => s_regV_data2,
+    o_ReadDataWide => s_MemoryReadDataV
+);
 	
 
 ------------------------------------------------------------------------
@@ -243,5 +293,8 @@ Port map(
 s_Data2Reg_muxout    <= s_adresse_PC_plus_4 when i_jump_link = '1' else
 					    s_AluResult         when i_MemtoReg = '0' else 
 						s_MemoryReadData;
+						
+s_Data2RegV_muxout    <= s_AluResult         when i_MemtoRegV = '0' else 
+						 s_MemoryReadDataV;
         
 end Behavioral;

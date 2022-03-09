@@ -25,11 +25,15 @@ Port (
     o_RegDst    	: out std_ulogic;
     o_Branch    	: out std_ulogic;
     o_MemtoReg  	: out std_ulogic;
+    o_MemtoRegV  	: out std_ulogic;
     o_AluFunct  	: out std_ulogic_vector (3 downto 0);
     o_MemRead   	: out std_ulogic;
     o_MemWrite  	: out std_ulogic;
+    o_MemReadWide  	: out std_ulogic;
+    o_MemWriteWide 	: out std_ulogic;
     o_ALUSrc    	: out std_ulogic;
     o_RegWrite  	: out std_ulogic;
+    o_RegWriteV  	: out std_ulogic;
 	
 	-- Sorties supp. vs 4.17
     o_Jump 			: out std_ulogic;
@@ -113,6 +117,9 @@ begin
 								i_Op = OP_LW or 
 								i_Op = OP_JAL
 						else '0';
+						
+    o_RegWriteV     <= '1' when i_OP = OP_LWV
+                        else '0';
 	
 	o_RegDst 		<= '1' when i_Op = OP_Rtype else '0';
 	
@@ -122,7 +129,10 @@ begin
 	o_Branch 		<= '1' when i_Op = OP_BEQ   else '0';
 	o_MemRead 		<= '1' when i_Op = OP_LW else '0';
 	o_MemWrite 		<= '1' when i_Op = OP_SW else '0';
+	o_MemReadWide 	<= '1' when i_Op = OP_LWV else '0';
+	o_MemWriteWide	<= '1' when i_Op = OP_SWV else '0';
 	o_MemtoReg 		<= '1' when i_Op = OP_LW else '0';
+	o_MemtoRegV     <= '1' when i_OP = OP_LWV else '0';
 	o_SignExtend	<= '1' when i_OP = OP_ADDI or
 	                           i_OP = OP_BEQ 
 	                     else '0';

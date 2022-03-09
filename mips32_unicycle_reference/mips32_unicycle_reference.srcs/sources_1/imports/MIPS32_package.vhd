@@ -63,6 +63,8 @@ package MIPS32_package is
     constant OP_LUI   : std_ulogic_vector( 5 downto 0 ) := "001111";
     constant OP_LW    : std_ulogic_vector( 5 downto 0 ) := "100011";
     constant OP_SW    : std_ulogic_vector( 5 downto 0 ) := "101011";
+    constant OP_LWV   : std_ulogic_vector( 5 downto 0 ) := "101100";
+    constant OP_SWV   : std_ulogic_vector( 5 downto 0 ) := "101101";
     --constant OP_immarith:   std_ulogic_vector( 5 downto 0 ) := "001---";
 	
 	
@@ -71,6 +73,7 @@ package MIPS32_package is
 	constant c_Mips32_Flush	: std_ulogic_vector(31 downto 0) := X"00000001";
     
     type RAM is array (natural range <>) of std_ulogic_vector (31 downto 0);
+    type RAMV is array (natural range <>) of std_ulogic_vector (127 downto 0);
 						
 	
     type op_type is (

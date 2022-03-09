@@ -30,7 +30,7 @@ end mips_unicycle_top;
 
 architecture Behavioral of mips_unicycle_top is
 
-component controleur is
+    component controleur is
 Port (
     i_Op        : in std_ulogic_vector(5 downto 0);
     i_funct_field : in std_ulogic_vector (5 downto 0);
@@ -59,18 +59,22 @@ Port (
 
 	i_alu_funct   	: in std_ulogic_vector(3 downto 0);
 	i_RegWrite    	: in std_ulogic;
+	i_RegWriteV    	: in std_ulogic;
 	i_RegDst      	: in std_ulogic;
 	i_MemtoReg    	: in std_ulogic;
+	i_MemtoRegV    	: in std_ulogic;
 	i_branch      	: in std_ulogic;
 	i_ALUSrc      	: in std_ulogic;
 	i_MemRead 		: in std_ulogic;
 	i_MemWrite	  	: in std_ulogic;
+	i_MemReadWide 	: in std_ulogic;
+	i_MemWriteWide	: in std_ulogic;
 
 	i_jump   	  	: in std_ulogic;
 	i_jump_register : in std_ulogic;
 	i_jump_link   	: in std_ulogic;
 	i_SignExtend 	: in std_ulogic;
-	
+
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
 );
@@ -78,12 +82,16 @@ end component;
 
     signal s_alu_funct      : std_ulogic_vector(3 downto 0);
     signal s_RegWrite       : std_ulogic;
+    signal s_RegWriteV       : std_ulogic;
 	signal s_RegDst         : std_ulogic;
     signal s_MemtoReg       : std_ulogic;
+    signal s_MemtoRegV       : std_ulogic;
 	signal s_branch         : std_ulogic;
     signal s_ALUSrc         : std_ulogic;
 	signal s_MemRead	    : std_ulogic;
 	signal s_MemWrite	    : std_ulogic;
+	signal s_MemReadWide    : std_ulogic;
+	signal s_MemWriteWide   : std_ulogic;
 	signal s_jump_register  : std_ulogic;
 	signal s_jump_link      : std_ulogic;
     signal s_jump           : std_ulogic;
@@ -127,12 +135,16 @@ Port map(
 
 	i_alu_funct   	=> s_alu_funct,
 	i_RegWrite    	=> s_RegWrite,
+	i_RegWriteV    	=> s_RegWriteV,
 	i_RegDst      	=> s_RegDst,
 	i_MemtoReg    	=> s_MemtoReg,
+	i_MemtoRegV    	=> s_MemtoRegV,
 	i_branch      	=> s_branch,
 	i_ALUSrc      	=> s_ALUSrc,
 	i_MemRead 		=> s_MemRead,
 	i_MemWrite	  	=> s_MemWrite,
+	i_MemReadWide 	=> s_MemReadWide,
+	i_MemWriteWide	=> s_MemWriteWide,
 	i_jump   	  	=> s_jump,
 	i_jump_register => s_jump_register,
 	i_jump_link   	=> s_jump_link,
