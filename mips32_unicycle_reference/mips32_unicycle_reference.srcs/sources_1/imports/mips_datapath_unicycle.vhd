@@ -36,14 +36,18 @@ Port (
 	i_MemWrite	  	: in std_ulogic;
 	i_MemReadWide 	: in std_ulogic;
 	i_MemWriteWide	: in std_ulogic;
-
+    
 	i_jump   	  	: in std_ulogic;
 	i_jump_register : in std_ulogic;
 	i_jump_link   	: in std_ulogic;
 	i_SignExtend 	: in std_ulogic;
-
+    i_ControleMuxAddvs : in std_logic;
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
+	
+	
+	--addvs
+	
 );
 end mips_datapath_unicycle;
 
@@ -100,9 +104,9 @@ end component;
 	   reset 		: in std_ulogic;
 	   i_MemRead	: in std_ulogic;
 	   i_MemWrite 	: in std_ulogic;
-        i_Addresse 	: in std_ulogic_vector (31 downto 0);
+       i_Addresse 	: in std_ulogic_vector (31 downto 0);
 	   i_WriteData : in std_ulogic_vector (31 downto 0);
-        o_ReadData 	: out std_ulogic_vector (31 downto 0);
+       o_ReadData 	: out std_ulogic_vector (31 downto 0);
 	
 	   -- ports pour accès à large bus, adresse partagée
 	   i_MemReadWide       : in std_ulogic;
@@ -153,8 +157,10 @@ end component;
     signal s_MemoryReadDataV    : std_ulogic_vector(127 downto 0);
     signal s_AluB_data             : std_ulogic_vector(31 downto 0);
 	
-
+    --addvs
+    signal s_muxReadData1 : std_logic_vector(31 downto 0);
 begin
+
 
 o_PC	<= r_PC; -- permet au synthÃ©tiseur de sortir de la logique. Sinon, il enlÃ¨ve tout...
 
@@ -255,15 +261,69 @@ s_imm_extended <= std_ulogic_vector(resize(  signed(s_imm16),32)) when i_SignExt
 -- Mux pour immÃ©diats
 s_AluB_data <= s_reg_data2 when i_ALUSrc = '0' else s_imm_extended;
 
-inst_Alu: alu 
-port map( 
-	i_a         => s_reg_data1,
+
+
+-----------------------------------------------------------------------------
+--ADDVS
+-----------------------------------------------------------------------------
+s_AluResultV(31 downto 0) <= s_AluResult; 
+s_muxReadData1 <= s_reg_data1 when i_ControleMuxAddvs = '0' else  s_regV_data1(31 downto 0);
+
+inst_Alu0: alu
+port map(
+
+    i_a         => s_reg_data1,
 	i_b         => s_AluB_data,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResult,
 	o_zero      => s_zero
 	);
+
+inst_Alu1: alu 
+port map( 
+	i_a         => s_regV_data1(63 downto 32),
+	i_b         => s_AluB_data,
+	i_alu_funct => i_alu_funct,
+	i_shamt     => s_shamt,
+	o_result    => s_AluResultV(63 downto 32),
+	o_zero      => s_zero
+	);
+	
+
+inst_Alu2: alu 
+port map( 
+	i_a         => s_regV_data1(95 downto 64),
+	i_b         => s_AluB_data,
+	i_alu_funct => i_alu_funct,
+	i_shamt     => s_shamt,
+	o_result    => s_AluResultV(95 downto 64),
+	o_zero      => s_zero
+	);
+
+inst_Alu3: alu 
+port map( 
+	i_a         => s_regV_data1(127 downto 0),
+	i_b         => s_AluB_data,
+	i_alu_funct => i_alu_funct,
+	i_shamt     => s_shamt,
+	o_result    => s_AluResultV(127 downto 95),
+	o_zero      => s_zero
+	);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ------------------------------------------------------------------------
 -- MÃ©moire de donnÃ©es

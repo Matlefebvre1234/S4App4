@@ -39,7 +39,10 @@ Port (
     o_Jump 			: out std_ulogic;
 	o_jump_register : out std_ulogic;
 	o_jump_link 	: out std_ulogic;
-	o_SignExtend 	: out std_ulogic
+	o_SignExtend 	: out std_ulogic;
+	
+	--addv
+	o_ControleMuxAddvs : out std_logic
     );
 end controleur;
 
@@ -74,6 +77,8 @@ begin
 				o_AluFunct <= ALU_ADD;
             -- when OP_??? =>   -- autres cas?
 			-- sinon
+			when OP_ADDVS =>
+			o_AluFunct <= ALU_ADD;
             when others =>
 				o_AluFunct <= (others => '0');
         end case;
@@ -103,13 +108,14 @@ begin
                 s_R_funct_decode <= ALU_SLT; 
             when ALUF_SLTU => 
                 s_R_funct_decode <= ALU_SLTU; 
-            -- à compléter au besoin avec d'autres instructions
             when others =>
                 s_R_funct_decode <= ALU_NULL;
          end case;
      end process;
 	
+	o_ControleMuxAddvs <= '1' when i_Op = OP_ADDVS
 	
+	 else '0';
 	o_RegWrite		<= '1' when i_Op = OP_Rtype or 
 								i_Op = OP_ADDI or 
 								i_Op = OP_ORI or 
@@ -118,13 +124,16 @@ begin
 								i_Op = OP_JAL
 						else '0';
 						
-    o_RegWriteV     <= '1' when i_OP = OP_LWV
+    o_RegWriteV     <= '1' when i_Op = OP_LWV or
+                                i_Op = OP_ADDVS
                         else '0';
 	
-	o_RegDst 		<= '1' when i_Op = OP_Rtype else '0';
+	o_RegDst 		<= '1' when i_Op = OP_Rtype or
+	                            i_Op = OP_ADDVS  else '0';
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or
-								i_Op = OP_BEQ
+								i_Op = OP_BEQ or 
+								i_Op = OP_ADDVS
 						else '1';
 	o_Branch 		<= '1' when i_Op = OP_BEQ   else '0';
 	o_MemRead 		<= '1' when i_Op = OP_LW else '0';
@@ -132,7 +141,7 @@ begin
 	o_MemReadWide 	<= '1' when i_Op = OP_LWV else '0';
 	o_MemWriteWide	<= '1' when i_Op = OP_SWV else '0';
 	o_MemtoReg 		<= '1' when i_Op = OP_LW else '0';
-	o_MemtoRegV     <= '1' when i_OP = OP_LWV else '0';
+	o_MemtoRegV     <= '1' when i_Op = OP_LWV else '0';
 	o_SignExtend	<= '1' when i_OP = OP_ADDI or
 	                           i_OP = OP_BEQ 
 	                     else '0';
