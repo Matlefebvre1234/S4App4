@@ -1,2 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sim_1/imports/verif/monitor_unicycle.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'monitor_unicycle'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Utilisateur/OneDrive - USherbrooke/Université/S5/app4/repogit/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/imports/controleur.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'controleur'

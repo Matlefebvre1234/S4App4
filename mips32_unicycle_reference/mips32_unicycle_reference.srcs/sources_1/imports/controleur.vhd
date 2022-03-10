@@ -79,6 +79,11 @@ begin
 			-- sinon
 			when OP_ADDVS =>
 			o_AluFunct <= ALU_ADD;
+			
+			when OP_LWV =>
+			o_AluFunct <= ALU_ADD;
+			when OP_SWV =>
+			o_AluFunct <= ALU_ADD;
             when others =>
 				o_AluFunct <= (others => '0');
         end case;
@@ -114,7 +119,6 @@ begin
      end process;
 	
 	o_ControleMuxAddvs <= '1' when i_Op = OP_ADDVS
-	
 	 else '0';
 	o_RegWrite		<= '1' when i_Op = OP_Rtype or 
 								i_Op = OP_ADDI or 

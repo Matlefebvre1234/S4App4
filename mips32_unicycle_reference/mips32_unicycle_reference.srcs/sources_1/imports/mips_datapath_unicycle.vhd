@@ -118,6 +118,9 @@ end component;
 
 	constant c_Registre31		 : std_ulogic_vector(4 downto 0) := "11111";
 	signal s_zero        : std_ulogic;
+	signal s_zero1        : std_ulogic;
+	signal s_zero2       : std_ulogic;
+	signal s_zero3        : std_ulogic;
 	
     signal s_WriteRegDest_muxout: std_ulogic_vector(4 downto 0);
 	
@@ -287,7 +290,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResultV(63 downto 32),
-	o_zero      => s_zero
+	o_zero      => s_zero1
 	);
 	
 
@@ -298,7 +301,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResultV(95 downto 64),
-	o_zero      => s_zero
+	o_zero      => s_zero2
 	);
 
 inst_Alu3: alu 
@@ -308,7 +311,7 @@ port map(
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResultV(127 downto 96),
-	o_zero      => s_zero
+	o_zero      => s_zero3
 	);
 
 

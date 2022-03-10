@@ -6,4 +6,21 @@ Starting static elaboration
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
-ERROR: [XSIM 43-3249] File C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/imports/mips_datapath_unicycle.vhd, line 120. Unresolved signal "s_zero" is multiply driven.
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package xil_defaultlib.mips32_package
+Compiling package std.env
+Compiling architecture behavioral of entity xil_defaultlib.controleur [controleur_default]
+Compiling architecture behavioral of entity xil_defaultlib.MemInstructions [meminstructions_default]
+Compiling architecture comport of entity xil_defaultlib.BancRegistres [bancregistres_default]
+Compiling architecture comport of entity xil_defaultlib.registrevector [registrevector_default]
+Compiling architecture comport of entity xil_defaultlib.alu [alu_default]
+Compiling architecture behavioral of entity xil_defaultlib.MemDonneesWideDual [memdonneeswidedual_default]
+Compiling architecture behavioral of entity xil_defaultlib.mips_datapath_unicycle [mips_datapath_unicycle_default]
+Compiling architecture behavioral of entity xil_defaultlib.mips_unicycle_top [mips_unicycle_top_default]
+Compiling architecture behavioral of entity xil_defaultlib.monitor_unicycle [monitor_unicycle_default]
+Compiling architecture behavioral of entity xil_defaultlib.mips_unicycle_tb
+Built simulation snapshot mips_unicycle_tb_behav
