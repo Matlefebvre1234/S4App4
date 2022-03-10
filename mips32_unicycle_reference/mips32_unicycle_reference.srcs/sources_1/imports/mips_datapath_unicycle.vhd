@@ -36,6 +36,7 @@ Port (
 	i_MemWrite	  	: in std_ulogic;
 	i_MemReadWide 	: in std_ulogic;
 	i_MemWriteWide	: in std_ulogic;
+	i_RegToRegWriteV: in std_ulogic;
     
 	i_jump   	  	: in std_ulogic;
 	i_jump_register : in std_ulogic;
@@ -75,15 +76,17 @@ end component;
 	
 	component registrevector is
 	Port ( 
-		clk : in std_ulogic;
-		reset : in std_ulogic;
-		i_RS1 : in std_ulogic_vector (4 downto 0);
-		i_RS2 : in std_ulogic_vector (4 downto 0);
-		i_Wr_DAT : in std_ulogic_vector (127 downto 0);
-		i_WDest : in std_ulogic_vector (4 downto 0);
-		i_WE : in std_ulogic;
-		o_RS1_DAT : out std_ulogic_vector (127 downto 0);
-		o_RS2_DAT : out std_ulogic_vector (127 downto 0)
+		clk       : in  std_ulogic;
+           reset     : in  std_ulogic;
+           i_RS1     : in  std_ulogic_vector (4 downto 0);
+           i_RS2     : in  std_ulogic_vector (4 downto 0);
+           i_Wr_DAT  : in  std_ulogic_vector (127 downto 0);
+           i_WDest   : in  std_ulogic_vector (4 downto 0);
+           i_WE 	 : in  std_ulogic;
+           i_RegToRegWE : in std_ulogic;
+           i_RegWriteE : in std_ulogic_vector (3 downto 0); -- it quels elements du vecteur doivent etre copies
+           o_RS1_DAT : out std_ulogic_vector (127 downto 0);
+           o_RS2_DAT : out std_ulogic_vector (127 downto 0)
 		);
 	end component;
 
@@ -160,6 +163,8 @@ end component;
     signal s_MemoryReadDataV    : std_ulogic_vector(127 downto 0);
     signal s_AluB_data             : std_ulogic_vector(31 downto 0);
 	
+	--movnv
+	signal s_RegWriteE             :std_ulogic_vector(3 downto 0);
     --addvs
     signal s_muxReadData1 : std_logic_vector(31 downto 0);
 begin
@@ -205,6 +210,7 @@ s_PC_Suivant		<= s_adresse_jump when i_jump = '1' else
                        s_reg_data1 when i_jump_register = '1' else
 					   s_adresse_branche when (i_branch = '1' and s_zero = '1') else
 					   s_adresse_PC_plus_4;
+
 					   
 
 ------------------------------------------------------------------------
@@ -249,6 +255,8 @@ port map (
 	i_Wr_DAT     => s_Data2RegV_muxout,--les donnees sont changees, pcq il faut en envoyer 128 a la place de 32
 	i_WDest      => s_WriteRegDest_muxout, -- reste le même, pcq on a le même nombre de registres pour notre bacn vectoriel
 	i_WE         => i_RegWriteV, --signal du controleur si on ecrit dans le registre vectoriel
+	i_RegToRegWE => i_RegToRegWriteV,
+	i_RegWriteE => s_RegWriteE,
 	o_RS1_DAT    => s_regV_data1, --registre vectoriel dans lequel on va chercher des valeurs
 	o_RS2_DAT    => s_regV_data2 --same
 	);
@@ -271,6 +279,11 @@ s_AluB_data <= s_reg_data2 when i_ALUSrc = '0' else s_imm_extended;
 -----------------------------------------------------------------------------
 s_AluResultV(31 downto 0) <= s_AluResult; 
 s_muxReadData1 <= s_reg_data1 when i_ControleMuxAddvs = '0' else  s_regV_data1(31 downto 0);
+
+-----------------------------------------------------------------------------
+--MOVNV
+-----------------------------------------------------------------------------
+s_RegWriteE <= s_regV_data1(3) & s_regV_data1(2) & s_regV_data1(1) & s_regV_data1(0); --verifier l'ordre ca pourrait etre un bordel
 
 inst_Alu0: alu
 port map(
@@ -358,7 +371,9 @@ s_Data2Reg_muxout    <= s_adresse_PC_plus_4 when i_jump_link = '1' else
 					    s_AluResult         when i_MemtoReg = '0' else 
 						s_MemoryReadData;
 						
-s_Data2RegV_muxout    <= s_AluResultV         when i_MemtoRegV = '0' else 
+s_Data2RegV_muxout    <= s_AluResultV         when i_MemtoRegV = '0' else
+                         s_regV_data1         when i_RegToRegWriteV = '1' else
+                        
 						 s_MemoryReadDataV;
         
 end Behavioral;

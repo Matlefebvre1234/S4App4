@@ -34,6 +34,7 @@ Port (
     o_ALUSrc    	: out std_ulogic;
     o_RegWrite  	: out std_ulogic;
     o_RegWriteV  	: out std_ulogic;
+    o_RegToRegWriteV : out std_ulogic;
 	
 	-- Sorties supp. vs 4.17
     o_Jump 			: out std_ulogic;
@@ -130,6 +131,9 @@ begin
 						
     o_RegWriteV     <= '1' when i_Op = OP_LWV or
                                 i_Op = OP_ADDVS
+                        else '0';
+                        
+    o_RegToRegWriteV <= '1' when i_Op = OP_MOVNV
                         else '0';
 	
 	o_RegDst 		<= '1' when i_Op = OP_Rtype or

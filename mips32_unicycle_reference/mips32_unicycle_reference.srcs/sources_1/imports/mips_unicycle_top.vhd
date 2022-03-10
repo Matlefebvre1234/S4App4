@@ -47,6 +47,7 @@ Port (
     o_ALUSrc    	: out std_ulogic;
     o_RegWrite  	: out std_ulogic;
     o_RegWriteV  	: out std_ulogic;
+    o_RegToRegWriteV : out std_ulogic;
 	
 	-- Sorties supp. vs 4.17
     o_Jump 			: out std_ulogic;
@@ -54,6 +55,7 @@ Port (
 	o_jump_link : out std_ulogic;
 	o_SignExtend : out std_ulogic;
 	o_ControleMuxAddvs :out std_logic
+	
     );
 end component;
 
@@ -101,6 +103,7 @@ end component;
 	signal s_jump_link      : std_ulogic;
     signal s_jump           : std_ulogic;
 	signal s_SignExtend     : std_ulogic;
+	signal s_RegToRegWriteV : std_ulogic;
     
 	signal s_ControleMuxAddvs : std_logic;
     signal s_Instruction    : std_ulogic_vector(31 downto 0);
@@ -133,7 +136,8 @@ Port map(
 	o_jump_register => s_jump_register,
 	o_jump_link		=> s_jump_link,
 	o_SignExtend 	=> s_SignExtend,
-	o_ControleMuxAddvs => s_ControleMuxAddvs
+	o_ControleMuxAddvs => s_ControleMuxAddvs,
+	o_RegToRegWriteV => s_RegToRegWriteV
     );
 	
 	

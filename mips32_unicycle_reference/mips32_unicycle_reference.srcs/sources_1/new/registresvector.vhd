@@ -22,6 +22,8 @@ entity registrevector is
            i_Wr_DAT  : in  std_ulogic_vector (127 downto 0);
            i_WDest   : in  std_ulogic_vector (4 downto 0);
            i_WE 	 : in  std_ulogic;
+           i_RegToRegWE : in std_ulogic;
+           i_RegWriteE : in std_ulogic_vector (3 downto 0); -- it quels elements du vecteur doivent etre copies
            o_RS1_DAT : out std_ulogic_vector (127 downto 0);
            o_RS2_DAT : out std_ulogic_vector (127 downto 0));
 end registrevector;
@@ -34,7 +36,19 @@ begin
     begin
         if clk='1' and clk'event then
             if i_WE = '1' and reset = '0' and i_WDest /= "00000" then
-                regs( to_integer( unsigned(i_WDest))) <= i_Wr_DAT;
+                if(i_RegToRegWE = '0') then
+                    regs( to_integer( unsigned(i_WDest))) <= i_Wr_DAT;
+                else
+                    if(i_RegWRiteE(0) = '1') then
+                    regs( to_integer( unsigned(i_WDest)))(0 to 31) <= i_Wr_DAT(0 to 31);
+                    elsif(i_RegWRiteE(1) = '1') then
+                    regs( to_integer( unsigned(i_WDest)))(32 to 63) <= i_Wr_DAT(32 to 63);
+                    elsif(i_RegWRiteE(2) = '1') then
+                    regs( to_integer( unsigned(i_WDest)))(64 to 95) <= i_Wr_DAT(64 to 95);
+                    elsif(i_RegWRiteE(3) = '1') then
+                    regs( to_integer( unsigned(i_WDest)))(96 to 127) <= i_Wr_DAT(96 to 127);
+                    end if;
+             end if;       
             end if;
         end if;
     end process;

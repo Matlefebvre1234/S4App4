@@ -65,7 +65,7 @@ package MIPS32_package is
     constant OP_SW    : std_ulogic_vector( 5 downto 0 ) := "101011";
     constant OP_LWV   : std_ulogic_vector( 5 downto 0 ) := "101100";
     constant OP_SWV   : std_ulogic_vector( 5 downto 0 ) := "101101";
-    
+    constant OP_MOVNV : std_ulogic_vector( 5 downto 0 ) := "110000";
     constant OP_ADDVS : std_ulogic_vector( 5 downto 0 ) := "101111";
     --constant OP_immarith:   std_ulogic_vector( 5 downto 0 ) := "001---";
 	
@@ -87,6 +87,7 @@ package MIPS32_package is
         sim_OP_OR,
 		sim_OP_NOR,
         sim_OP_ADD,
+        sim_OP_ADDVS,
 		sim_OP_ADDU,
         sim_OP_SUB,
         sim_OP_SLL,
@@ -102,6 +103,9 @@ package MIPS32_package is
         sim_OP_LUI,
 		sim_OP_LW,
 		sim_OP_SW,
+		sim_OP_LWV,
+		sim_OP_SWV,
+		sim_OP_MOVNV,
 		sim_OP_SYSCALL,
         sim_OP_Undefined
     );
@@ -195,6 +199,14 @@ begin
 			CurrentOp := sim_OP_LW;
 		when OP_SW =>
 			CurrentOp := sim_OP_SW;
+		when OP_LWV =>
+			CurrentOp := sim_OP_LWV;
+		when OP_SWV =>
+			CurrentOp := sim_OP_SWV;
+		when OP_ADDVS =>
+			CurrentOp := sim_OP_ADDVS;
+		when OP_MOVNV =>
+			CurrentOp := sim_OP_MOVNV;
 		when others =>
 			CurrentOp := sim_OP_Undefined;
 	end case;
