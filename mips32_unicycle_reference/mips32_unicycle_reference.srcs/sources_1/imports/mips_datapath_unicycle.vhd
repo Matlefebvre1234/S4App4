@@ -303,11 +303,11 @@ port map(
 
 inst_Alu3: alu 
 port map( 
-	i_a         => s_regV_data1(127 downto 0),
+	i_a         => s_regV_data1(127 downto 96),
 	i_b         => s_AluB_data,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
-	o_result    => s_AluResultV(127 downto 95),
+	o_result    => s_AluResultV(127 downto 96),
 	o_zero      => s_zero
 	);
 
