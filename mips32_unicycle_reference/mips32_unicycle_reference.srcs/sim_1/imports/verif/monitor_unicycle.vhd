@@ -35,8 +35,8 @@ architecture Behavioral of monitor_unicycle is
     
 begin
 
-	show_alu_unsupported	<= <<signal .mips_unicycle_tb.dut.inst_Datapath.inst_alu.d_unsupported : std_ulogic>>;
-	show_alu_action 		<= f_DisplayAluAction(<<signal .mips_unicycle_tb.dut.inst_Datapath.inst_alu.i_alu_funct : std_ulogic_vector>>);
+	show_alu_unsupported	<= <<signal .mips_unicycle_tb.dut.inst_Datapath.inst_alu0.d_unsupported : std_ulogic>>;
+	show_alu_action 		<= f_DisplayAluAction(<<signal .mips_unicycle_tb.dut.inst_Datapath.inst_alu0.i_alu_funct : std_ulogic_vector>>);
 
 
 EncapsulerExtraction: block
