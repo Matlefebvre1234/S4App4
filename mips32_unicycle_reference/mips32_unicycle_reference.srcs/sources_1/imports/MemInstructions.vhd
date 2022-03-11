@@ -32,10 +32,12 @@ architecture Behavioral of MemInstructions is
 ------------------------
 --  TestMirroir
 X"3c011001",
-X"8c240000",
-X"b0240000",
-X"20080004",
-X"bc884820",
+X"34280000",
+X"3c011001",
+X"34290010",
+X"b1040000",
+X"b1260000",
+X"fc86382a",
 
 ------------------------
 -- Fin de votre code

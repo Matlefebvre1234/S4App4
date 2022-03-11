@@ -42,7 +42,8 @@ Port (
 	o_SignExtend 	: out std_ulogic;
 	
 	--addv
-	o_ControleMuxAddvs : out std_logic
+	o_ControleMuxAddvs : out std_logic;
+	o_ControleMuxSltv : out std_logic
     );
 end controleur;
 
@@ -79,7 +80,8 @@ begin
 			-- sinon
 			when OP_ADDVS =>
 			o_AluFunct <= ALU_ADD;
-			
+			when OP_SLTV =>
+			o_AluFunct <=  ALU_SLT;
 			when OP_LWV =>
 			o_AluFunct <= ALU_ADD;
 			when OP_SWV =>
@@ -118,8 +120,10 @@ begin
          end case;
      end process;
 	
-	o_ControleMuxAddvs <= '1' when i_Op = OP_ADDVS
+	o_ControleMuxAddvs <= '1' when i_Op = OP_ADDVS or i_Op = OP_SLTV
 	 else '0';
+	 
+	o_ControleMuxSltv <= '1' when i_Op = OP_SLTV else '0';
 	o_RegWrite		<= '1' when i_Op = OP_Rtype or 
 								i_Op = OP_ADDI or 
 								i_Op = OP_ORI or 
@@ -129,15 +133,20 @@ begin
 						else '0';
 						
     o_RegWriteV     <= '1' when i_Op = OP_LWV or
-                                i_Op = OP_ADDVS
+                                i_Op = OP_ADDVS or 
+                                i_Op = OP_SLTV
                         else '0';
 	
 	o_RegDst 		<= '1' when i_Op = OP_Rtype or
-	                            i_Op = OP_ADDVS  else '0';
+	                            i_Op = OP_ADDVS or
+	                             i_Op = OP_SLTV
+	                                else '0';
+	                            
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or
 								i_Op = OP_BEQ or 
-								i_Op = OP_ADDVS
+								i_Op = OP_ADDVS or
+								i_Op = OP_SLTV
 						else '1';
 	o_Branch 		<= '1' when i_Op = OP_BEQ   else '0';
 	o_MemRead 		<= '1' when i_Op = OP_LW else '0';
