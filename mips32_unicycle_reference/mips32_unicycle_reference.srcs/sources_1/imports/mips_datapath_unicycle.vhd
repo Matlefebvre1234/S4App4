@@ -283,7 +283,7 @@ s_muxReadData1 <= s_reg_data1 when i_ControleMuxAddvs = '0' else  s_regV_data1(3
 -----------------------------------------------------------------------------
 --MOVNV
 -----------------------------------------------------------------------------
-s_RegWriteE <= s_regV_data1(3) & s_regV_data1(2) & s_regV_data1(1) & s_regV_data1(0); --verifier l'ordre ca pourrait etre un bordel
+s_RegWriteE <= s_regV_data2(96) & s_regV_data2(64) & s_regV_data2(32) & s_regV_data2(0); --verifier l'ordre ca pourrait etre un bordel
 
 inst_Alu0: alu
 port map(
@@ -371,7 +371,7 @@ s_Data2Reg_muxout    <= s_adresse_PC_plus_4 when i_jump_link = '1' else
 					    s_AluResult         when i_MemtoReg = '0' else 
 						s_MemoryReadData;
 						
-s_Data2RegV_muxout    <= s_AluResultV         when i_MemtoRegV = '0' else
+s_Data2RegV_muxout    <= s_AluResultV         when i_MemtoRegV = '0' and i_RegToRegWriteV = '0' else
                          s_regV_data1         when i_RegToRegWriteV = '1' else
                         
 						 s_MemoryReadDataV;

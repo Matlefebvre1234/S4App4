@@ -130,14 +130,16 @@ begin
 						else '0';
 						
     o_RegWriteV     <= '1' when i_Op = OP_LWV or
-                                i_Op = OP_ADDVS
+                                i_Op = OP_ADDVS or
+                                i_OP = OP_MOVNV
                         else '0';
                         
     o_RegToRegWriteV <= '1' when i_Op = OP_MOVNV
                         else '0';
 	
 	o_RegDst 		<= '1' when i_Op = OP_Rtype or
-	                            i_Op = OP_ADDVS  else '0';
+	                            i_Op = OP_ADDVS or
+	                            i_OP = OP_MOVNV else '0';
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or
 								i_Op = OP_BEQ or 

@@ -31,11 +31,11 @@ architecture Behavioral of MemInstructions is
 -- Insérez votre code ici
 ------------------------
 --  TestMirroir
-X"3c011001",
-X"8c240000",
-X"b0240000",
-X"20080004",
-X"bc884820",
+x"20080001",
+x"BC084820",
+x"3c011001",
+x"b02a0000",
+x"c149580b",
 
 ------------------------
 -- Fin de votre code

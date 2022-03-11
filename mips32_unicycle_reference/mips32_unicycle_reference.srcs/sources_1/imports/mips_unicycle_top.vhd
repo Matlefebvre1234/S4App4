@@ -76,6 +76,7 @@ Port (
 	i_MemWrite	  	: in std_ulogic;
 	i_MemReadWide 	: in std_ulogic;
 	i_MemWriteWide	: in std_ulogic;
+	i_RegToRegWriteV: in std_ulogic;
 
 	i_jump   	  	: in std_ulogic;
 	i_jump_register : in std_ulogic;
@@ -165,7 +166,8 @@ Port map(
 	i_SignExtend 	=> s_SignExtend,
 	o_Instruction 	=> s_Instruction,
 	o_PC			=> o_PC,
-    i_ControleMuxAddvs => s_ControleMuxAddvs
+    i_ControleMuxAddvs => s_ControleMuxAddvs,
+    i_RegToRegWriteV => s_RegToRegWriteV
 );	
 
 o_Instruction <= s_Instruction;

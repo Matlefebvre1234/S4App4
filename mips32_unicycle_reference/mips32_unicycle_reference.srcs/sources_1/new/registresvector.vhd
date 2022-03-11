@@ -39,14 +39,18 @@ begin
                 if(i_RegToRegWE = '0') then
                     regs( to_integer( unsigned(i_WDest))) <= i_Wr_DAT;
                 else
-                    if(i_RegWRiteE(0) = '1') then
-                    regs( to_integer( unsigned(i_WDest)))(0 to 31) <= i_Wr_DAT(0 to 31);
-                    elsif(i_RegWRiteE(1) = '1') then
-                    regs( to_integer( unsigned(i_WDest)))(32 to 63) <= i_Wr_DAT(32 to 63);
-                    elsif(i_RegWRiteE(2) = '1') then
-                    regs( to_integer( unsigned(i_WDest)))(64 to 95) <= i_Wr_DAT(64 to 95);
-                    elsif(i_RegWRiteE(3) = '1') then
-                    regs( to_integer( unsigned(i_WDest)))(96 to 127) <= i_Wr_DAT(96 to 127);
+                    if(i_RegWriteE(0) = '1') then
+                        regs( to_integer( unsigned(i_WDest)))(31 downto 0) <= i_Wr_DAT(31 downto 0);
+                    end if;
+                    if(i_RegWriteE(1) = '1') then
+                        regs( to_integer( unsigned(i_WDest)))(63 downto 32) <= i_Wr_DAT(63 downto 32);
+                    end if;
+                    if(i_RegWriteE(2) = '1') then
+                        regs( to_integer( unsigned(i_WDest)))(95 downto 64) <= i_Wr_DAT(95 downto 64);
+                    end if;
+                    if(i_RegWriteE(3) = '1') then
+                        regs( to_integer( unsigned(i_WDest)))(127 downto 96) <= i_Wr_DAT(127 downto 96);
+                     
                     end if;
              end if;       
             end if;
