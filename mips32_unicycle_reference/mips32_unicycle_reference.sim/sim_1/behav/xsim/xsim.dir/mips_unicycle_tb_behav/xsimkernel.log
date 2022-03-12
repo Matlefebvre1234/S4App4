@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Running: xsim.dir/mips_unicycle_tb_behav/xsimk.exe -simmode gui -wdb mips_unicycle_tb_behav.wdb -simrunnum 0 -socket 58305
 Design successfully loaded
 Design Loading Memory Usage: 6020 KB (Peak: 6020 KB)
@@ -5,3 +6,12 @@ Design Loading CPU Usage: 62 ms
 Simulation completed
 Simulation Memory Usage: 6684 KB (Peak: 6684 KB)
 Simulation CPU Usage: 77 ms
+=======
+Running: xsim.dir/mips_unicycle_tb_behav/xsimk.exe -simmode gui -wdb mips_unicycle_tb_behav.wdb -simrunnum 0 -socket 30606
+Design successfully loaded
+Design Loading Memory Usage: 7704 KB (Peak: 7704 KB)
+Design Loading CPU Usage: 77 ms
+Simulation completed
+Simulation Memory Usage: 8468 KB (Peak: 8468 KB)
+Simulation CPU Usage: 108 ms
+>>>>>>> main

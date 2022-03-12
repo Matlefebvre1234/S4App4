@@ -54,8 +54,8 @@ Port (
 	o_jump_register : out std_ulogic;
 	o_jump_link : out std_ulogic;
 	o_SignExtend : out std_ulogic;
-	o_ControleMuxAddvs :out std_logic
-	
+	o_ControleMuxAddvs :out std_logic;
+	o_ControleMuxSltv : out std_logic
     );
 end component;
 
@@ -83,6 +83,7 @@ Port (
 	i_jump_link   	: in std_ulogic;
 	i_SignExtend 	: in std_ulogic;
     i_ControleMuxAddvs : in std_logic;
+    i_ControleMuxSltv : in std_logic;
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
 );
@@ -107,6 +108,7 @@ end component;
 	signal s_RegToRegWriteV : std_ulogic;
     
 	signal s_ControleMuxAddvs : std_logic;
+	signal s_ControleMuxSltv : std_logic;
     signal s_Instruction    : std_ulogic_vector(31 downto 0);
     -- champs du registre d'instructions
     alias s_instr_funct     : std_ulogic_vector(5 downto 0) is s_Instruction(5 downto 0);
@@ -138,6 +140,7 @@ Port map(
 	o_jump_link		=> s_jump_link,
 	o_SignExtend 	=> s_SignExtend,
 	o_ControleMuxAddvs => s_ControleMuxAddvs,
+	o_ControleMuxSltv => s_ControleMuxSltv
 	o_RegToRegWriteV => s_RegToRegWriteV
     );
 	
@@ -167,6 +170,7 @@ Port map(
 	o_Instruction 	=> s_Instruction,
 	o_PC			=> o_PC,
     i_ControleMuxAddvs => s_ControleMuxAddvs,
+    i_ControleMuxSltv => s_ControleMuxSltv
     i_RegToRegWriteV => s_RegToRegWriteV
 );	
 

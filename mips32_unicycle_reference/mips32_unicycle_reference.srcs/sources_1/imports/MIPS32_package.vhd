@@ -67,6 +67,7 @@ package MIPS32_package is
     constant OP_SWV   : std_ulogic_vector( 5 downto 0 ) := "101101";
     constant OP_MOVNV : std_ulogic_vector( 5 downto 0 ) := "110000";
     constant OP_ADDVS : std_ulogic_vector( 5 downto 0 ) := "101111";
+    constant OP_SLTV : std_ulogic_vector( 5 downto 0 ) := "111111";
     --constant OP_immarith:   std_ulogic_vector( 5 downto 0 ) := "001---";
 	
 	

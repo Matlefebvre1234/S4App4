@@ -43,6 +43,7 @@ Port (
 	i_jump_link   	: in std_ulogic;
 	i_SignExtend 	: in std_ulogic;
     i_ControleMuxAddvs : in std_logic;
+    i_ControleMuxSltv : in std_logic;
 	o_Instruction 	: out std_ulogic_vector (31 downto 0);
 	o_PC		 	: out std_ulogic_vector (31 downto 0)
 	
@@ -162,11 +163,19 @@ end component;
     signal s_MemoryReadData        : std_ulogic_vector(31 downto 0);
     signal s_MemoryReadDataV    : std_ulogic_vector(127 downto 0);
     signal s_AluB_data             : std_ulogic_vector(31 downto 0);
+     signal s_AluB_data2            : std_ulogic_vector(31 downto 0);
+      signal s_AluB_data3             : std_ulogic_vector(31 downto 0);
+       signal s_AluB_data4             : std_ulogic_vector(31 downto 0);
 	
 	--movnv
 	signal s_RegWriteE             :std_ulogic_vector(3 downto 0);
     --addvs
     signal s_muxReadData1 : std_logic_vector(31 downto 0);
+    --sltv
+    signal s_muxRead2SouV1 : std_logic_vector(31 downto 0);
+    signal s_muxRead2SouV2 : std_logic_vector(31 downto 0);
+    signal s_muxRead2SouV3 : std_logic_vector(31 downto 0);
+    signal s_muxRead2SouV4 : std_logic_vector(31 downto 0);
 begin
 
 
@@ -269,8 +278,18 @@ port map (
 s_imm_extended <= std_ulogic_vector(resize(  signed(s_imm16),32)) when i_SignExtend = '1' else -- extension de signe à 32 bits
 				  std_ulogic_vector(resize(unsigned(s_imm16),32)); 
 
+
+--sltv
+s_muxRead2SouV1 <= s_reg_data2 when i_ControleMuxSltv = '0' else s_regV_data2(31 downto 0) ;
+s_muxRead2SouV2 <= s_reg_data2 when i_ControleMuxSltv = '0' else s_regV_data2(63 downto 32) ;
+s_muxRead2SouV3 <= s_reg_data2 when i_ControleMuxSltv = '0' else s_regV_data2(95 downto 64) ;
+s_muxRead2SouV4 <= s_reg_data2 when i_ControleMuxSltv = '0' else s_regV_data2(127 downto 96) ;
+
 -- Mux pour immédiats
-s_AluB_data <= s_reg_data2 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data <= s_muxRead2SouV1 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data2 <= s_muxRead2SouV2 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data3 <= s_muxRead2SouV3 when i_ALUSrc = '0' else s_imm_extended;
+s_AluB_data4 <= s_muxRead2SouV4 when i_ALUSrc = '0' else s_imm_extended;
 
 
 
@@ -288,7 +307,7 @@ s_RegWriteE <= s_regV_data2(96) & s_regV_data2(64) & s_regV_data2(32) & s_regV_d
 inst_Alu0: alu
 port map(
 
-    i_a         => s_reg_data1,
+    i_a         => s_muxReadData1,
 	i_b         => s_AluB_data,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
@@ -299,7 +318,7 @@ port map(
 inst_Alu1: alu 
 port map( 
 	i_a         => s_regV_data1(63 downto 32),
-	i_b         => s_AluB_data,
+	i_b         => s_AluB_data2,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResultV(63 downto 32),
@@ -310,7 +329,7 @@ port map(
 inst_Alu2: alu 
 port map( 
 	i_a         => s_regV_data1(95 downto 64),
-	i_b         => s_AluB_data,
+	i_b         => s_AluB_data3,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResultV(95 downto 64),
@@ -320,14 +339,12 @@ port map(
 inst_Alu3: alu 
 port map( 
 	i_a         => s_regV_data1(127 downto 96),
-	i_b         => s_AluB_data,
+	i_b         => s_AluB_data4,
 	i_alu_funct => i_alu_funct,
 	i_shamt     => s_shamt,
 	o_result    => s_AluResultV(127 downto 96),
 	o_zero      => s_zero3
 	);
-
-
 
 
 
