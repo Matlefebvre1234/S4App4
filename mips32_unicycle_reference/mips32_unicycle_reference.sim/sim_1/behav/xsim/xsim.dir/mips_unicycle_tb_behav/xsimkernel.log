@@ -2,6 +2,9 @@ Running: xsim.dir/mips_unicycle_tb_behav/xsimk.exe -simmode gui -wdb mips_unicyc
 Design successfully loaded
 Design Loading Memory Usage: 6016 KB (Peak: 6016 KB)
 Design Loading CPU Usage: 0 ms
+<<<<<<< HEAD
 Simulation completed
 Simulation Memory Usage: 6720 KB (Peak: 6720 KB)
 Simulation CPU Usage: 0 ms
+=======
+>>>>>>> movnv

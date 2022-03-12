@@ -25,6 +25,7 @@ Time: 220 ns  Iteration: 8  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_Me
 Warning: mauvais alignement de l'adresse pour une ecriture large
 Time: 220 ns  Iteration: 9  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/line__76  File: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/new/MemDonneesWideDual.vhd
 Warning: mauvais alignement de l'adresse pour une ecriture large
+<<<<<<< HEAD
 Time: 230 ns  Iteration: 8  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/line__76  File: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/new/MemDonneesWideDual.vhd
 Warning: mauvais alignement de l'adresse pour une ecriture large
 Time: 230 ns  Iteration: 9  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/line__76  File: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/new/MemDonneesWideDual.vhd
@@ -38,3 +39,6 @@ Warning: mauvais alignement de l'adresse pour une ecriture large
 Time: 250 ns  Iteration: 6  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/line__76  File: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/new/MemDonneesWideDual.vhd
 Warning: mauvais alignement de l'adresse pour une ecriture large
 Time: 250 ns  Iteration: 8  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/line__76  File: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.srcs/sources_1/new/MemDonneesWideDual.vhd
+=======
+Time: 230 ns  Iteration: 8  Process: /mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/line__76  File: C:
+>>>>>>> movnv

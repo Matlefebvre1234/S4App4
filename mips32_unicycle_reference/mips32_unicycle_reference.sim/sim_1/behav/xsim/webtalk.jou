@@ -2,8 +2,13 @@
 # Webtalk v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+<<<<<<< HEAD
 # Start of session at: Sat Mar 12 13:11:48 2022
 # Process ID: 4700
+=======
+# Start of session at: Sat Mar 12 13:06:14 2022
+# Process ID: 10916
+>>>>>>> movnv
 # Current directory: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.sim/sim_1/behav/xsim
 # Command line: wbtcv.exe -mode batch -source C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.sim/sim_1/behav/xsim/xsim.dir/mips_unicycle_tb_behav/webtalk/xsim_webtalk.tcl -notrace
 # Log file: C:/Users/mathg/OneDrive/Bureau/Tout/Bacc UdeS/S4APP4/git/S4App4/mips32_unicycle_reference/mips32_unicycle_reference.sim/sim_1/behav/xsim/webtalk.log
