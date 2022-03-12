@@ -70,7 +70,7 @@ begin
 	s_MemoryRangeValid <= '1' when i_Addresse(31 downto 10) = (X"10010" & "00") else '0'; 
 
 
-	s_WideMemoryRangeValid <= '1' when (i_Addresse(31 downto 10) = (X"10010" & "00") and i_Addresse(3 downto 2) = "00") else '0'; 
+	s_WideMemoryRangeValid <= '1' when i_Addresse(31 downto 10) = (X"10010" & "00") else '0'; -- and i_Addresse(3 downto 2) = "00") else '0'; 
 	
 	-- message de simulation
 	assert (i_MemWriteWide = '1' and  i_Addresse(4 downto 0) = "00000") report "mauvais alignement de l'adresse pour une ecriture large" severity warning;

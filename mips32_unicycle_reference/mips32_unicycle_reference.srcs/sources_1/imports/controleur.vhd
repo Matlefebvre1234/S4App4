@@ -134,7 +134,7 @@ begin
 						else '0';
 						
     o_RegWriteV     <= '1' when i_Op = OP_LWV or
-                                i_Op = OP_SLTV
+                                i_Op = OP_SLTV or
                                 i_Op = OP_ADDVS or
                                 i_OP = OP_MOVNV
                         else '0';
@@ -144,7 +144,7 @@ begin
 	
 	o_RegDst 		<= '1' when i_Op = OP_Rtype or
 	                            i_Op = OP_ADDVS or
-	                             i_Op = OP_SLTV
+	                             i_Op = OP_SLTV or
 	                            i_OP = OP_MOVNV else '0';
 	
 	o_ALUSrc 		<= '0' when i_Op = OP_Rtype or

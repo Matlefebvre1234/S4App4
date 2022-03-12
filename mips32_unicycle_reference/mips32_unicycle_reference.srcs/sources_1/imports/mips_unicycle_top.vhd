@@ -140,7 +140,7 @@ Port map(
 	o_jump_link		=> s_jump_link,
 	o_SignExtend 	=> s_SignExtend,
 	o_ControleMuxAddvs => s_ControleMuxAddvs,
-	o_ControleMuxSltv => s_ControleMuxSltv
+	o_ControleMuxSltv => s_ControleMuxSltv,
 	o_RegToRegWriteV => s_RegToRegWriteV
     );
 	
@@ -170,7 +170,7 @@ Port map(
 	o_Instruction 	=> s_Instruction,
 	o_PC			=> o_PC,
     i_ControleMuxAddvs => s_ControleMuxAddvs,
-    i_ControleMuxSltv => s_ControleMuxSltv
+    i_ControleMuxSltv => s_ControleMuxSltv,
     i_RegToRegWriteV => s_RegToRegWriteV
 );	
 
