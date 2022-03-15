@@ -42,17 +42,9 @@ architecture Behavioral of MemDonneesWideDual is
 -- Insérez vos donnees ici
 ------------------------
 X"00000001",
-X"00000002",
-X"00000003",
-X"00000004",
-X"00000010",
-X"00000020",
-X"00000030",
-X"00000040",
-
-
-
-
+X"00000000",
+X"00000000",
+X"00000001",
 
 ------------------------
 -- Fin de votre code
