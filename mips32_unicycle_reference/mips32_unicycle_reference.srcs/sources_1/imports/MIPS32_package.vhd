@@ -31,7 +31,7 @@ package MIPS32_package is
     constant ALU_SLL  : std_ulogic_vector( 3 downto 0 ) := "1010";
     constant ALU_SRL  : std_ulogic_vector( 3 downto 0 ) := "1011";
     constant ALU_SRA  : std_ulogic_vector( 3 downto 0 ) := "1100";
-    constant ALU_MULTU: std_ulogic_vector( 3 downto 0 ) := "1101";
+    constant ALU_MUL  : std_ulogic_vector( 3 downto 0 ) := "1101";
     constant ALU_SLL16: std_ulogic_vector( 3 downto 0 ) := "1110";
     constant ALU_NULL : std_ulogic_vector( 3 downto 0 ) := "1111";
     
@@ -50,7 +50,7 @@ package MIPS32_package is
     constant ALUF_XOR : std_ulogic_vector( 5 downto 0 ) := "100110";
     constant ALUF_NOR : std_ulogic_vector( 5 downto 0 ) := "100111";
     constant ALUF_SLT : std_ulogic_vector( 5 downto 0 ) := "101010";
-    constant ALUF_SLTU: std_ulogic_vector( 5 downto 0 ) := "101011";
+    constant ALUF_MUL : std_ulogic_vector( 5 downto 0 ) := "101011";
     constant ALUF_SYSCALL	: std_ulogic_vector( 5 downto 0 ) := "001100";
     
     -- opcodes dans le décodage d'instructions
@@ -107,7 +107,9 @@ package MIPS32_package is
 		sim_OP_LWV,
 		sim_OP_SWV,
 		sim_OP_MOVNV,
+		sim_OP_SLTV,
 		sim_OP_SYSCALL,
+		sim_OP_MUL,
         sim_OP_Undefined
     );
     function f_DisplayOp(InstructionDebug : std_ulogic_vector( 31 downto 0 )
@@ -175,8 +177,8 @@ begin
 					CurrentOp := sim_OP_SRL;
 				when ALUF_SLT =>
 					CurrentOp := sim_OP_SLT;
-				when ALUF_SLTU =>
-					CurrentOp := sim_OP_SLTU;
+				when ALUF_MUL =>
+					CurrentOp := sim_OP_MUL;
 				when ALUF_JR =>
 					CurrentOp := sim_OP_JR;
 				when ALUF_SYSCALL =>
@@ -208,6 +210,8 @@ begin
 			CurrentOp := sim_OP_ADDVS;
 		when OP_MOVNV =>
 			CurrentOp := sim_OP_MOVNV;
+			when OP_SLTV =>
+			CurrentOp := sim_OP_SLTV;
 		when others =>
 			CurrentOp := sim_OP_Undefined;
 	end case;

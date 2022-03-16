@@ -114,8 +114,8 @@ begin
                 s_R_funct_decode <= ALU_ADD;
             when ALUF_SLT => 
                 s_R_funct_decode <= ALU_SLT; 
-            when ALUF_SLTU => 
-                s_R_funct_decode <= ALU_SLTU; 
+            when ALUF_MUL => 
+                s_R_funct_decode <= ALU_MUL; 
             when others =>
                 s_R_funct_decode <= ALU_NULL;
          end case;

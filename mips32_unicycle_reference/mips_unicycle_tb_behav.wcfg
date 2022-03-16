@@ -11,22 +11,34 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="53334fs"></ZoomStartTime>
-      <ZoomEndTime time="1053335fs"></ZoomEndTime>
-      <Cursor1Time time="220000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1050001fs"></ZoomEndTime>
+      <Cursor1Time time="500000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="231"></NameColumnWidth>
-      <ValueColumnWidth column_width="180"></ValueColumnWidth>
+      <ValueColumnWidth column_width="168"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="6" />
+   <WVObjectSize size="8" />
+   <wave_markers>
+      <marker time="330000" label="" />
+      <marker time="371371" label="" />
+   </wave_markers>
    <wvobject fp_name="/mips_unicycle_tb/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
+   <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemInstr/i_addresse" type="array">
+      <obj_property name="ElementShortName">i_addresse[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i_addresse[31:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/mips_unicycle_tb/reset" type="logic">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_unicycle_tb/dut/inst_Controleur/i_funct_field" type="array">
+      <obj_property name="ElementShortName">i_funct_field[5:0]</obj_property>
+      <obj_property name="ObjectShortName">i_funct_field[5:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/mips_unicycle_tb/inst_monitor/show_Instruction" type="other">
       <obj_property name="ElementShortName">show_Instruction</obj_property>
@@ -44,5 +56,6 @@
    <wvobject fp_name="/mips_unicycle_tb/dut/inst_Datapath/inst_MemDonneesWide/ram_DataMemory" type="array">
       <obj_property name="ElementShortName">ram_DataMemory[0:255][31:0]</obj_property>
       <obj_property name="ObjectShortName">ram_DataMemory[0:255][31:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
 </wave_config>

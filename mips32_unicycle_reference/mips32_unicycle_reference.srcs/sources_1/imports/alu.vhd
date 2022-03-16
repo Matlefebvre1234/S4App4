@@ -53,6 +53,8 @@ begin
                 d_result <= std_ulogic_vector(signed(i_a) + signed(i_b));
             when ALU_SUB => 
                 d_result <= std_ulogic_vector(signed(i_a) - signed(i_b));
+            when ALU_MUL => 
+                d_result <= std_ulogic_vector(signed(i_a) * signed(i_b));
             when ALU_SLL => 
                 d_result <= std_ulogic_vector(signed(i_b) sll to_integer( decale ));  
             when ALU_SRL => 
